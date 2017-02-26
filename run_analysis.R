@@ -55,10 +55,12 @@ write.table(full, paste(getwd(), "cleandata", "full_set.txt", sep = "/"), row.na
 
 
 ## 5. aggregated the data by subject and activity
-aggr <- suppressWarnings(aggregate(x = full, by = list(full$activity, full$subject), FUN = "mean")[,-c(4,5)])
+aggr <- suppressWarnings(aggregate(x = full, by = list(full$activity, full$subject), FUN = "mean")[,-c(3,4,5)])
 ## tidy the names
+names(aggr) <- lapply(names(aggr), function(x) paste('Average', x, sep = "-"))
 names(aggr)[1] <- "activity"
 names(aggr)[2] <- "subject"
+
 ## write the result to file
 write.table(aggr, paste(getwd(), "cleandata", "aggregated_set.txt", sep = "/"), row.name=FALSE)
 
